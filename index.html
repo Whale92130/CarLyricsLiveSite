@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CarLyrics Back-seat Lyrics</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <div class="top-actions">
+      <div id="connection" class="connection">Connecting</div>
+      <button id="offsetMinus" class="offset-button" type="button" aria-label="Decrease local lyric offset by 0.1 seconds" title="Decrease local lyric offset by 0.1 seconds">-0.1s</button>
+      <button id="offsetPlus" class="offset-button" type="button" aria-label="Increase local lyric offset by 0.1 seconds" title="Increase local lyric offset by 0.1 seconds">+0.1s</button>
+      <div id="offsetValue" class="offset-value">0.0s</div>
+      <button id="fullscreen" class="icon-button" type="button" aria-label="Enter fullscreen" title="Fullscreen">
+        <svg class="enter-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 3H4a1 1 0 0 0-1 1v4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 3h4a1 1 0 0 1 1 1v4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 21H4a1 1 0 0 1-1-1v-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 21h4a1 1 0 0 0 1-1v-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="exit-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M8 3v4a1 1 0 0 1-1 1H3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 3v4a1 1 0 0 0 1 1h4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 21v-4a1 1 0 0 0-1-1H3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 21v-4a1 1 0 0 1 1-1h4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div id="time" class="time">--:-- / --:--</div>
+    <section id="lyrics" class="lyrics" aria-live="polite">
+      <div class="lyric-line active">Waiting for a song</div>
+    </section>
+    <div class="footer">
+      <span id="song" class="song">Waiting for a song</span>
+      <span id="saved" class="saved" aria-label="Saved on device">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3v11" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          <path d="M7.5 9.8 12 14.3l4.5-4.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5.5 20.5h13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+        </svg>
+      </span>
+    </div>
+    <div class="progress"><div id="progress" class="fill"></div></div>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
