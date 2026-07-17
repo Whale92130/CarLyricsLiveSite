@@ -15,15 +15,27 @@
   --album-glow-strong: rgba(255, 255, 255, 0.28);
   --album-glow-soft: rgba(255, 255, 255, 0.16);
 }
-* { box-sizing: border-box; }
-html, body { width: 100%; min-height: 100%; }
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  background: var(--bg);
+}
+
 body {
   margin: 0;
-  min-height: 100vh;
   overflow: hidden;
+  overscroll-behavior: none;
   background: var(--bg);
   color: var(--fg);
 }
+
 body.light {
   color-scheme: light;
   --bg: #ffffff;
@@ -35,13 +47,18 @@ body.light {
   --button-stroke: rgba(0, 0, 0, 0.36);
   --shadow: none;
 }
+
 main {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
-  min-height: 100vh;
+  height: 100svh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
   background: var(--bg);
 }
+
 .top-actions {
   position: absolute;
   top: max(12px, env(safe-area-inset-top));
@@ -52,6 +69,7 @@ main {
   align-items: center;
   gap: 8px;
 }
+
 .connection {
   color: var(--fg);
   background: var(--button-bg);
@@ -62,7 +80,9 @@ main {
   font-weight: 700;
   line-height: 1;
   text-shadow: var(--shadow);
+  white-space: nowrap;
 }
+
 .icon-button {
   width: 34px;
   height: 34px;
@@ -78,19 +98,31 @@ main {
   text-shadow: var(--shadow);
   touch-action: manipulation;
 }
+
 .icon-button svg {
   width: 20px;
   height: 20px;
   display: block;
   pointer-events: none;
 }
-.icon-button .exit-icon { display: none; }
-.icon-button.active .enter-icon { display: none; }
-.icon-button.active .exit-icon { display: block; }
+
+.icon-button .exit-icon {
+  display: none;
+}
+
+.icon-button.active .enter-icon {
+  display: none;
+}
+
+.icon-button.active .exit-icon {
+  display: block;
+}
+
 .icon-button:disabled,
 .icon-button.unsupported {
   display: none;
 }
+
 .offset-button,
 .offset-value {
   min-width: 64px;
@@ -105,13 +137,16 @@ main {
   text-align: center;
   text-shadow: var(--shadow);
 }
+
 .offset-button {
   cursor: pointer;
   touch-action: manipulation;
 }
+
 .offset-value {
   color: var(--muted);
 }
+
 .time {
   position: absolute;
   top: max(12px, env(safe-area-inset-top));
@@ -121,21 +156,27 @@ main {
   font-size: clamp(12px, 2vw, 14px);
   font-weight: 700;
   text-shadow: var(--shadow);
+  white-space: nowrap;
 }
+
 .lyrics {
   position: absolute;
-  inset:
-    clamp(28px, 12vh, 80px)
-    clamp(18px, 4vw, 54px);
+  inset: clamp(28px, 12vh, 80px) clamp(18px, 4vw, 54px);
+  overflow-x: hidden;
   overflow-y: auto;
   padding: 38vh 0 42vh;
   text-align: center;
   scroll-behavior: smooth;
+  scroll-padding-block: 40%;
   scrollbar-width: none;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
 }
+
 .lyrics::-webkit-scrollbar {
   display: none;
 }
+
 .lyric-line {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -149,6 +190,7 @@ main {
   line-height: 1.08;
   text-shadow: var(--shadow);
   overflow-wrap: anywhere;
+  word-break: normal;
   text-wrap: balance;
   overflow: hidden;
   transition:
@@ -160,6 +202,7 @@ main {
   transform: scale(0.985);
   will-change: color, font-size, opacity, transform;
 }
+
 .lyric-line.active {
   color: var(--fg);
   font-weight: 900;
@@ -172,6 +215,7 @@ main {
   opacity: 1;
   transform: scale(1.025);
 }
+
 .footer {
   position: absolute;
   left: clamp(48px, 10vw, 96px);
@@ -190,11 +234,13 @@ main {
   white-space: nowrap;
   overflow: hidden;
 }
+
 .song {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .saved {
   flex: 0 0 auto;
   display: none;
@@ -205,13 +251,18 @@ main {
   align-items: center;
   justify-content: center;
 }
-.saved.visible { display: inline-flex; }
+
+.saved.visible {
+  display: inline-flex;
+}
+
 .saved svg {
   width: 100%;
   height: 100%;
   display: block;
   overflow: visible;
 }
+
 .progress {
   position: absolute;
   left: clamp(64px, 10vw, 128px);
@@ -222,6 +273,7 @@ main {
   border-radius: 999px;
   overflow: hidden;
 }
+
 .fill {
   height: 100%;
   width: 0%;
@@ -229,29 +281,187 @@ main {
   border-radius: inherit;
   box-shadow: var(--shadow);
 }
-@media (max-width: 640px) {
-  body { overflow: auto; }
-  main { min-height: 100svh; }
+
+/* Phone layout */
+@media (max-width: 700px) {
+  .time {
+    top: max(11px, env(safe-area-inset-top));
+    left: max(10px, env(safe-area-inset-left));
+    max-width: 42vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+  }
+
+  /* Two compact rows in the upper-right so controls never cover lyrics. */
+  .top-actions {
+    top: max(8px, env(safe-area-inset-top));
+    right: max(8px, env(safe-area-inset-right));
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    align-items: center;
+    justify-items: center;
+    gap: 5px;
+  }
+
+  .connection {
+    grid-column: 1 / -1;
+    justify-self: end;
+    padding: 6px 9px;
+    border-radius: 10px;
+    font-size: 11px;
+  }
+
+  .offset-button,
+  .offset-value {
+    min-width: 50px;
+    min-height: 32px;
+    padding: 6px 7px;
+    border-radius: 9px;
+    font-size: 12px;
+  }
+
+  .icon-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+  }
+
+  .icon-button svg {
+    width: 18px;
+    height: 18px;
+  }
+
   .lyrics {
-    inset:
-      clamp(54px, 12vh, 76px)
-      clamp(12px, 4vw, 24px)
-      clamp(78px, 16vh, 110px);
-    padding: 36vh 0 42vh;
+    top: max(82px, calc(env(safe-area-inset-top) + 74px));
+    right: max(10px, env(safe-area-inset-right));
+    bottom: max(84px, calc(env(safe-area-inset-bottom) + 78px));
+    left: max(10px, env(safe-area-inset-left));
+    padding: max(24vh, 140px) 0 max(26vh, 155px);
+    scroll-padding-block: 42%;
   }
-  .lyric-line.active {
-    font-size: var(--active-font-size, clamp(21px, 8.05vw, 39px));
-  }
+
   .lyric-line {
-    font-size: clamp(18px, 7vw, 34px);
+    width: 100%;
+    padding: 8px 3px;
+    font-size: clamp(17px, 5.8vw, 28px);
+    line-height: 1.12;
+    opacity: 0.58;
+    transform: none;
   }
+
+  /* Do not truncate the currently active lyric on phones. */
+  .lyric-line.active {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+    padding: 12px 2px;
+    font-size: var(--active-font-size, clamp(21px, 7.1vw, 34px));
+    line-height: 1.08;
+    transform: none;
+    overflow-wrap: anywhere;
+  }
+
   .footer {
-    left: 20px;
-    right: 20px;
-    font-size: clamp(15px, 5vw, 22px);
+    left: max(16px, env(safe-area-inset-left));
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(25px, calc(env(safe-area-inset-bottom) + 23px));
+    gap: 6px;
+    font-size: clamp(14px, 4.4vw, 19px);
   }
+
+  .saved {
+    width: 18px;
+    height: 18px;
+  }
+
   .progress {
-    left: 28px;
-    right: 28px;
+    left: max(16px, env(safe-area-inset-left));
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(8px, calc(env(safe-area-inset-bottom) + 7px));
+    height: 4px;
+  }
+}
+
+@media (max-width: 380px) {
+  .top-actions {
+    right: max(6px, env(safe-area-inset-right));
+    gap: 4px;
+  }
+
+  .offset-button,
+  .offset-value {
+    min-width: 46px;
+    padding-inline: 5px;
+    font-size: 11px;
+  }
+
+  .lyrics {
+    right: max(7px, env(safe-area-inset-right));
+    left: max(7px, env(safe-area-inset-left));
+  }
+
+  .lyric-line {
+    font-size: clamp(16px, 5.6vw, 24px);
+  }
+
+  .lyric-line.active {
+    font-size: var(--active-font-size, clamp(20px, 6.8vw, 30px));
+  }
+}
+
+/* Short landscape phones */
+@media (max-height: 520px) and (orientation: landscape) {
+  .time {
+    top: max(9px, env(safe-area-inset-top));
+    font-size: 11px;
+  }
+
+  .top-actions {
+    top: max(6px, env(safe-area-inset-top));
+    grid-template-columns: repeat(5, auto);
+    gap: 5px;
+  }
+
+  .connection {
+    grid-column: auto;
+  }
+
+  .offset-button,
+  .offset-value {
+    min-width: 46px;
+    min-height: 30px;
+    padding: 5px 6px;
+    font-size: 11px;
+  }
+
+  .icon-button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .lyrics {
+    top: max(46px, calc(env(safe-area-inset-top) + 40px));
+    bottom: max(50px, calc(env(safe-area-inset-bottom) + 44px));
+    padding: 32vh 0 35vh;
+  }
+
+  .lyric-line {
+    padding: 5px 2px;
+    font-size: clamp(15px, 3.6vw, 23px);
+  }
+
+  .lyric-line.active {
+    padding: 7px 2px;
+    font-size: var(--active-font-size, clamp(18px, 4.3vw, 29px));
+  }
+
+  .footer {
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 16px));
+    font-size: clamp(13px, 2.8vw, 17px);
+  }
+
+  .progress {
+    bottom: max(5px, calc(env(safe-area-inset-bottom) + 4px));
   }
 }
