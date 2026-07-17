@@ -1,10 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 
+
 import {
-  getDatabase,
-  onValue,
-  ref
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+  FIREBASE_CONFIG,
+  SESSION_ID
+} from "./firebase-config.js";
 
 import {
   FIREBASE_CONFIG,
